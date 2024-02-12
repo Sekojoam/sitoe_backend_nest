@@ -1,10 +1,5 @@
 version: "3.1"
 
-env_file:
-  - path: ./.env
-    required: true # default
-
-
 services:
   nestjs_api:
     build:
@@ -21,6 +16,8 @@ services:
     image: mysql
     ports:
       - '3307:3307'
+    env_file:
+      - ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
