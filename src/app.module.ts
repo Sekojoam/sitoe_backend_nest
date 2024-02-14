@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './user/user.controller';
 import { Publication } from './publications/entities/publication.entity';
 import { Theme } from './themes/entities/theme.entity';
 import { PublicationsController } from './publications/publications.controller';
@@ -21,7 +20,7 @@ import { ThemesService } from './themes/themes.service';
     password: process.env.MYSQL_PASSWORD,
     synchronize: true,
   }), TypeOrmModule.forFeature([Publication, Theme])],
-  controllers: [AppController, UserController, PublicationsController, ThemesController],
+  controllers: [AppController, PublicationsController, ThemesController],
   providers: [AppService, PublicationsService, ThemesService],
 })
 export class AppModule { }

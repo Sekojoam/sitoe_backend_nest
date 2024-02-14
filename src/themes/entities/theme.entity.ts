@@ -1,4 +1,3 @@
-// theme.entity.ts
 import { Publication } from 'src/publications/entities/publication.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
@@ -11,5 +10,5 @@ export class Theme {
   text: string;
 
   @OneToMany(() => Publication, publications => publications.theme)
-  publicationss: Publication[];
+  publications: Publication[];
 }

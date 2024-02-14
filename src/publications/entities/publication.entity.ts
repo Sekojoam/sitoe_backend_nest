@@ -1,5 +1,5 @@
 import { Theme } from "src/themes/entities/theme.entity";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Publication {
@@ -9,6 +9,7 @@ export class Publication {
   @Column()
   text: string;
 
-  @ManyToOne(() => Theme, theme => theme.publicationss)
+  @ManyToOne(() => Theme, theme => theme.publications, { nullable: false })
+  @JoinColumn()
   theme: Theme;
 }
