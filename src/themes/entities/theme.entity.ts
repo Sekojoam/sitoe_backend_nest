@@ -9,6 +9,12 @@ export class Theme {
   @Column()
   text: string;
 
+  @Column({ default: false })
+  validated: boolean;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @OneToMany(() => Publication, publications => publications.theme)
   publications: Publication[];
 }

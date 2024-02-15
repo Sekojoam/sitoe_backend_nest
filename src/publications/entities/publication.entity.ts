@@ -9,6 +9,9 @@ export class Publication {
   @Column()
   text: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @ManyToOne(() => Theme, theme => theme.publications, { nullable: false })
   @JoinColumn()
   theme: Theme;
