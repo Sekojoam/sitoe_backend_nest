@@ -19,7 +19,7 @@ export class PublicationsService {
   }
 
   async findOne(id: number): Promise<Publication> {
-    return await this.publicationRepository.findOne({ where: { id } });
+    return await this.publicationRepository.findOne({ where: { id }, relations: ['theme'] });
   }
 
   async update(id: number, updatePublication: Publication): Promise<Publication> {
