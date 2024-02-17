@@ -30,4 +30,9 @@ export class PublicationsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.publicationsService.remove(+id);
   }
+
+  @Get(':id/suggestions')
+  findSuggestion(@Param('id') id: string): Promise<Publication[]> {
+    return this.publicationsService.getSuggestionsForPublication(+id);
+  }
 }
