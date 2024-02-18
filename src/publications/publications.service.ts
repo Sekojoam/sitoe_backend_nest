@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Publication } from './entities/publication.entity';
-import { Not, Repository } from 'typeorm';
+import { MoreThan, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -32,21 +32,14 @@ export class PublicationsService {
   }
 
   async getSuggestionsForPublication(publicationId: number): Promise<Publication[]> {
-    console.log("publicationId " + publicationId)
-    // Récupérer la publication actuelle
-    const currentPublication = await this.publicationRepository.findOne({ where: { id: publicationId } });
-
-    if (!currentPublication) {
-      throw new Error(`Publication with id ${publicationId} not found`);
-    }
-
-    // Récupérer les publications les plus récentes, en excluant la publication actuelle
     const recentPublications = await this.publicationRepository.find({
       where: {
-        id: Not(publicationId),
+        id: publicationId
+          ? MoreThan(publicationId) // pour commencer à partir d'un certain ID
+          : undefined, // si startingId n'est pas fourni, commencer à partir du début
       },
       order: {
-        createdAt: 'DESC',
+        createdAt: 'ASC',
       },
       take: 2,
     });
