@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Publication } from './entities/publication.entity';
-import { MoreThan, Not, Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -15,7 +15,12 @@ export class PublicationsService {
   }
 
   async findAll(): Promise<Publication[]> {
-    return await this.publicationRepository.find({ relations: ['theme'] });
+    return await this.publicationRepository.find({
+      relations: ['theme'],
+      order: {
+        createdAt: 'DESC'
+      }
+    });
   }
 
   async findOne(id: number): Promise<Publication> {
@@ -35,11 +40,11 @@ export class PublicationsService {
     const recentPublications = await this.publicationRepository.find({
       where: {
         id: publicationId
-          ? MoreThan(publicationId) // pour commencer à partir d'un certain ID
+          ? LessThan(publicationId) // pour commencer à partir d'un certain ID
           : undefined, // si startingId n'est pas fourni, commencer à partir du début
       },
       order: {
-        createdAt: 'ASC',
+        createdAt: 'DESC',
       },
       take: 2,
     });
